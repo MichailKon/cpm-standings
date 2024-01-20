@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Критерии</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<table class="table table-bordered table-striped">
+  <tr>
+    <th scope="col"></th>
+    <th scope="col">Необходимые задачи</th>
+    <th scope="col">Нормировка</th>
+    <th scope="col">Обязательный или нет</th>
+    <th scope="col">Где искать оценку</th>
+  </tr>
+    {{range $contestName, $groups := .Criteria}}
+        {{range $group := $groups}}
+          <tr>
+            <th scope="col">{{$group.Name}}</th>
+            <td>{{$group.Tasks}}</td>
+            <td>{{$group.Norm}}</td>
+              {{if eq $group.Required true}}
+                <td style="background-color: lightgreen">Обязательный</td>
+              {{else}}
+                <td style="background-color: lightcoral">Необязательный</td>
+              {{end}}
+            <td>{{$group.MarkDate}}</td>
+          </tr>
+        {{end}}
+    {{end}}
+</table>
+</body>
+</html>
