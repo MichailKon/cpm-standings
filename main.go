@@ -7,5 +7,6 @@ import (
 
 func main() {
 	conf := config.ParseConfig("config.yaml")
-	server_worker.RunServer(conf)
+	mapping := config.ParseStudentsHandlesMapping("mapping.yaml")
+	server_worker.RunServer(conf, mapping)
 }

@@ -1,8 +1,9 @@
 package data_worker
 
 import (
-	"cpm-standings/algocode_worker"
 	"cpm-standings/config"
+	"cpm-standings/parser"
+	codeforces_api "github.com/MichailKon/codeforces-api"
 	"log/slog"
 	"slices"
 )
@@ -14,6 +15,7 @@ type StudentContestData struct {
 
 type Student struct {
 	Name         string
+	Handle       string
 	ContestsData []*StudentContestData
 }
 
@@ -50,24 +52,28 @@ func convertMark(mark float64) int {
 	}
 }
 
-func ExportStudentsData(data *algocode_worker.SubmitsData, criteria config.Criteria) (res *StudentsExportData) {
+func ExportStudentsData(
+	session *codeforces_api.CodeforcesSession,
+	mapping config.StudentsHandlesMapping,
+	criteria config.Criteria,
+) (res *StudentsExportData) {
 	res = &StudentsExportData{
 		ContestTitles: make([]string, 0),
 		Students:      make([]*Student, 0),
 	}
-	for _, user := range data.Users {
+
+	for handle, name := range mapping {
 		res.Students = append(res.Students, &Student{
-			Name:         user.Name,
+			Name:         name,
+			Handle:       handle,
 			ContestsData: make([]*StudentContestData, 0),
 		})
 	}
 
-	table := algocode_worker.UnpackSubmitsData(data)
-	contest2id := algocode_worker.CreateContest2Id(data)
-	user2id := algocode_worker.CreateUser2Id(data)
+	table := parser.LoadData(session, criteria)
 
 	for _, groups := range criteria {
-		for _, group := range groups {
+		for _, group := range groups.Groups {
 			slices.Sort(group.Tasks)
 		}
 	}
@@ -77,21 +83,21 @@ func ExportStudentsData(data *algocode_worker.SubmitsData, criteria config.Crite
 		}
 	}
 
-	keys := make([]string, 0)
-	for contestTitle := range criteria {
-		keys = append(keys, contestTitle)
+	contestIds := make([]int, 0)
+	for _, i := range criteria {
+		contestIds = append(contestIds, i.ContestId)
 	}
-	slices.Sort(keys)
-	for _, contestTitle := range keys {
+	slices.Sort(contestIds)
+	slices.Reverse(contestIds)
+	for _, contestId := range contestIds {
+		contestTitle := criteria.GetContestName(contestId)
 		taskGroup := criteria[contestTitle]
-		slog.Info("Filling contest", contestTitle)
-		for _, group := range taskGroup {
+		slog.Info("Filling contest", contestId)
+		for _, group := range taskGroup.Groups {
 			slog.Info("Filling task group", group.Name)
 			res.ContestTitles = append(res.ContestTitles, group.Name)
-			contestId := contest2id[contestTitle]
 			for i, student := range res.Students {
-				studentId := user2id[student.Name]
-				solved := intersection(table[studentId][contestId], group.Tasks)
+				solved := intersection(table[student.Handle][contestId], group.Tasks)
 				res.Students[i].ContestsData = append(res.Students[i].ContestsData, &StudentContestData{
 					Solved: solved,
 					Mark:   convertMark(10 * float64(solved) / float64(group.Norm)),

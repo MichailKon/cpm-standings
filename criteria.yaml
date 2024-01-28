@@ -1,68 +1,122 @@
 Динамичка:
-  - Tasks:
-      - "A"
-      - "B"
-      - "C"
-      - "D"
-      - "E"
-      - "F"
-      - "G"
-      - "H"
-      - "I"
-    Norm: 8
-    Required: true
-    MarkDate: ""
-    Name: "Динамичка, обязательная часть"
-  - Tasks:
-      - "J"
-      - "K"
-      - "L"
-      - "M"
-      - "N"
-      - "S"
-      - "O"
-      - "P"
-      - "Q"
-      - "R"
-      - "S"
-    Norm: 6
-    Required: false
-    MarkDate: ""
-    Name: "Динамичка, НЕобязательная часть"
+  ContestId: 482992
+  Groups:
+    - Tasks:
+        - "A"
+        - "B"
+        - "C"
+        - "D"
+        - "E"
+        - "F"
+        - "G"
+        - "H"
+        - "I"
+      Norm: 8
+      Required: true
+      MarkDate: ""
+      Name: "Динамичка, обязательная часть"
+    - Tasks:
+        - "J"
+        - "K"
+        - "L"
+        - "M"
+        - "N"
+        - "S"
+        - "O"
+        - "P"
+        - "Q"
+        - "R"
+        - "S"
+      Norm: 6
+      Required: false
+      MarkDate: ""
+      Name: "Динамичка, НЕобязательная часть"
 Линейные алгоритмики:
-  - Tasks:
-      - "A"
-      - "B"
-      - "C"
-      - "D"
-      - "E"
-      - "F"
-      - "G"
-      - "H"
-      - "I"
-      - "J"
-      - "K"
-      - "L"
-      - "M"
-      - "N"
-      - "O"
-    Norm: 12
-    Required: true
-    MarkDate: ""
-    Name: "Линейные алгоритмики"
+  ContestId: 478825
+  Groups:
+    - Tasks:
+        - "A"
+        - "B"
+        - "C"
+        - "D"
+        - "E"
+        - "F"
+        - "G"
+        - "H"
+        - "I"
+        - "J"
+        - "K"
+        - "L"
+        - "M"
+        - "N"
+        - "O"
+      Norm: 12
+      Required: true
+      MarkDate: ""
+      Name: "Линейные алгоритмики"
 Сортировочки:
-  - Tasks:
-      - "A"
-      - "B"
-      - "C"
-      - "D"
-      - "E"
-      - "F"
-      - "G"
-      - "H"
-      - "I"
-      - "J"
-    Norm: 8
-    Required: true
-    MarkDate: ""
-    Name: "Сортировочки"
+  ContestId: 489960
+  Groups:
+    - Tasks:
+        - "A"
+        - "B"
+        - "C"
+        - "D"
+        - "E"
+        - "F"
+        - "G"
+        - "H"
+        - "I"
+        - "J"
+      Norm: 8
+      Required: true
+      MarkDate: ""
+      Name: "Сортировочки"
+Бинпоиск 0:
+  ContestId: 501021
+  Groups:
+    - Tasks:
+        - "A"
+        - "B"
+        - "C"
+        - "D"
+        - "E"
+        - "F"
+        - "G"
+        - "H"
+      Norm: 8
+      Required: true
+      MarkDate: ""
+      Name: "Бинпоиск (0)"
+Бинпоиск 1:
+  ContestId: 501020
+  Groups:
+    - Tasks:
+        - "A"
+        - "B"
+        - "C"
+        - "D"
+        - "E"
+        - "F"
+        - "G"
+        - "H"
+      Norm: 7
+      Required: true
+      MarkDate: ""
+      Name: "Биноиск (1)"
+Контест X:
+  ContestId: 499650
+  Groups:
+    - Tasks:
+        - "A"
+        - "B"
+        - "C"
+        - "D"
+        - "E"
+        - "F"
+        - "G"
+        - "H"
+      Norm: 8
+      Required: false
+      MarkDate: ""
+      Name: "Контест X"

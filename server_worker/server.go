@@ -1,18 +1,18 @@
 package server_worker
 
 import (
-	"cpm-standings/algocode_worker"
 	"cpm-standings/config"
 	"cpm-standings/data_worker"
+	codeforcesapi "github.com/MichailKon/codeforces-api"
 	"github.com/gin-gonic/gin"
 	"log/slog"
 	"net/http"
 )
 
-func CraftStandings(conf *config.Config) *gin.H {
+func CraftStandings(conf *config.Config, mapping config.StudentsHandlesMapping) *gin.H {
 	criteria := config.ParseCriteria(conf.CriteriaPath)
-	data := algocode_worker.GetSubmitsData(conf.SubmitsLink)
-	res := data_worker.ExportStudentsData(data, criteria)
+	session := codeforcesapi.NewCodeforcesSession(conf.ApiKey, conf.Secret)
+	res := data_worker.ExportStudentsData(session, mapping, criteria)
 	return &gin.H{
 		"ContestTitles": res.ContestTitles,
 		"Students":      res.Students,
@@ -26,11 +26,11 @@ func CraftCriteria(conf *config.Config) *gin.H {
 	}
 }
 
-func RunServer(conf *config.Config) {
+func RunServer(conf *config.Config, mapping config.StudentsHandlesMapping) {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*.gohtml")
 	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "standings.gohtml", CraftStandings(conf))
+		c.HTML(http.StatusOK, "standings.gohtml", CraftStandings(conf, mapping))
 	})
 	router.GET("/criteria", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "criteria.gohtml", CraftCriteria(conf))

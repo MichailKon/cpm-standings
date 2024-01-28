@@ -1,3 +1,4 @@
-Host: "127.0.0.1:8000"
+Host: "127.0.0.1:8069"
 CriteriaPath: "criteria.yaml"
-SubmitsLink: "https://algocode.ru/standings_data/cpm2023offline3standings/"
+ApiKey: "xxx"
+Secret: "yyy"
