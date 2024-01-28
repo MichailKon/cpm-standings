@@ -4,11 +4,13 @@ go 1.21
 
 require github.com/gin-gonic/gin v1.9.1
 
-require gopkg.in/yaml.v3 v3.0.1
+require (
+	github.com/MichailKon/codeforces-api v0.0.0-20240128215825-fcc9ad4d1ff9
+	gopkg.in/yaml.v3 v3.0.1
+)
 
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect
-	github.com/MichailKon/codeforces-api v0.0.0-20240128160754-4a35d63ea4b6 // indirect
 	github.com/bytedance/sonic v1.10.2 // indirect
 	github.com/chavacava/garif v0.0.0-20230227094218-b8c73b2037b8 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
