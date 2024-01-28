@@ -43,7 +43,9 @@ func LoadData(session *codeforcesapi.CodeforcesSession, criteria config.Criteria
 			standings = cur
 			break
 		}
-
+		if standings == nil {
+			continue
+		}
 		for _, row := range standings.Rows {
 			handle := row.Party.Members[0].Handle
 			if _, ok := res[handle]; !ok {
