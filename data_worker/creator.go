@@ -6,6 +6,7 @@ import (
 	codeforces_api "github.com/MichailKon/codeforces-api"
 	"log/slog"
 	"slices"
+	"strings"
 )
 
 type StudentContestData struct {
@@ -105,5 +106,8 @@ func ExportStudentsData(
 			}
 		}
 	}
+	slices.SortFunc(res.Students, func(a, b *Student) int {
+		return strings.Compare(a.Name, b.Name)
+	})
 	return
 }

@@ -16,7 +16,7 @@
     <th scope="col">Где искать оценку</th>
   </tr>
     {{range $contestName, $groups := .Criteria}}
-        {{range $group := $groups}}
+        {{range $group := $groups.Groups}}
           <tr>
             <th scope="col">{{$group.Name}}</th>
             <td>{{$group.Tasks}}</td>

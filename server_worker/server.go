@@ -4,9 +4,12 @@ import (
 	"cpm-standings/config"
 	"cpm-standings/data_worker"
 	codeforcesapi "github.com/MichailKon/codeforces-api"
+	cache "github.com/chenyahui/gin-cache"
+	"github.com/chenyahui/gin-cache/persist"
 	"github.com/gin-gonic/gin"
 	"log/slog"
 	"net/http"
+	"time"
 )
 
 func CraftStandings(conf *config.Config, mapping config.StudentsHandlesMapping) *gin.H {
@@ -27,9 +30,10 @@ func CraftCriteria(conf *config.Config) *gin.H {
 }
 
 func RunServer(conf *config.Config, mapping config.StudentsHandlesMapping) {
+	memoryStore := persist.NewMemoryStore(10 * time.Minute)
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*.gohtml")
-	router.GET("/", func(c *gin.Context) {
+	router.GET("/", cache.CacheByRequestURI(memoryStore, 10*time.Minute), func(c *gin.Context) {
 		c.HTML(http.StatusOK, "standings.gohtml", CraftStandings(conf, mapping))
 	})
 	router.GET("/criteria", func(c *gin.Context) {
