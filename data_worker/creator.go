@@ -66,7 +66,7 @@ func ExportStudentsData(
 	for handle, name := range mapping {
 		res.Students = append(res.Students, &Student{
 			Name:         name,
-			Handle:       handle,
+			Handle:       strings.ToLower(handle),
 			ContestsData: make([]*StudentContestData, 0),
 		})
 	}

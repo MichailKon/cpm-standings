@@ -8,6 +8,7 @@ import (
 	"github.com/MichailKon/codeforces-api/utils"
 	"log/slog"
 	"net/http"
+	"strings"
 )
 
 // SolvedTasks is a list of solved tasks (bruh)
@@ -47,7 +48,7 @@ func LoadData(session *codeforcesapi.CodeforcesSession, criteria config.Criteria
 			continue
 		}
 		for _, row := range standings.Rows {
-			handle := row.Party.Members[0].Handle
+			handle := strings.ToLower(row.Party.Members[0].Handle)
 			if _, ok := res[handle]; !ok {
 				res[handle] = make(ContestsData)
 			}
