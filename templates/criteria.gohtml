@@ -9,11 +9,19 @@
 <body>
 <table class="table table-bordered table-striped">
   <tr>
-    <th scope="col"></th>
-    <th scope="col">Необходимые задачи</th>
-    <th scope="col">Нормировка</th>
-    <th scope="col">Обязательный или нет</th>
-    <th scope="col">Где искать оценку</th>
+    <th scope="col" rowspan="2" style="text-align: center; vertical-align: middle"></th>
+    <th scope="col" rowspan="2" style="text-align: center; vertical-align: middle">Учитываемые задачи</th>
+    <th scope="col" rowspan="2" style="text-align: center; vertical-align: middle">Нормировка</th>
+    <th scope="col" rowspan="2" style="text-align: center; vertical-align: middle">Обязательный или нет</th>
+    <th scope="col" rowspan="2" style="text-align: center; vertical-align: middle">Где искать оценку</th>
+    <th scope="col" colspan="3" style="text-align: center; vertical-align: middle">Необходимое количество задач на
+      оценку
+    </th>
+  </tr>
+  <tr>
+    <th scope="col" style="text-align: center; vertical-align: middle">Задач на 3</th>
+    <th scope="col" style="text-align: center; vertical-align: middle">Задач на 4</th>
+    <th scope="col" style="text-align: center; vertical-align: middle">Задач на 5</th>
   </tr>
     {{range $contestName, $groups := .Criteria}}
         {{range $group := $groups.Groups}}
@@ -27,6 +35,9 @@
                 <td style="background-color: lightcoral">Необязательный</td>
               {{end}}
             <td>{{$group.MarkDate}}</td>
+            <td>{{$group.Mark3LowerBound}}</td>
+            <td>{{$group.Mark4LowerBound}}</td>
+            <td>{{$group.Mark5LowerBound}}</td>
           </tr>
         {{end}}
     {{end}}

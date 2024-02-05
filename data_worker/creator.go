@@ -3,6 +3,7 @@ package data_worker
 import (
 	"cpm-standings/config"
 	"cpm-standings/parser"
+	"cpm-standings/utils"
 	codeforces_api "github.com/MichailKon/codeforces-api"
 	"log/slog"
 	"slices"
@@ -23,34 +24,6 @@ type Student struct {
 type StudentsExportData struct {
 	ContestTitles []string
 	Students      []*Student
-}
-
-func intersection(a, b []string) (res int) {
-	l, r := 0, 0
-	for l < len(a) && r < len(b) {
-		if a[l] == a[r] {
-			res++
-			l++
-			r++
-		} else if a[l] < a[r] {
-			l++
-		} else {
-			r++
-		}
-	}
-	return
-}
-
-func convertMark(mark float64) int {
-	if mark < 3.5 {
-		return 2
-	} else if mark < 5.5 {
-		return 3
-	} else if mark < 7.5 {
-		return 4
-	} else {
-		return 5
-	}
 }
 
 func ExportStudentsData(
@@ -98,10 +71,10 @@ func ExportStudentsData(
 			slog.Info("Filling task group", group.Name)
 			res.ContestTitles = append(res.ContestTitles, group.Name)
 			for i, student := range res.Students {
-				solved := intersection(table[student.Handle][contestId], group.Tasks)
+				solved := utils.Intersection(table[student.Handle][contestId], group.Tasks)
 				res.Students[i].ContestsData = append(res.Students[i].ContestsData, &StudentContestData{
 					Solved: solved,
-					Mark:   convertMark(10 * float64(solved) / float64(group.Norm)),
+					Mark:   utils.ConvertMark(10 * float64(solved) / float64(group.Norm)),
 				})
 			}
 		}

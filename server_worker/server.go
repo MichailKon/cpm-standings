@@ -36,7 +36,7 @@ func RunServer(conf *config.Config, mapping config.StudentsHandlesMapping) {
 	router.GET("/", cache.CacheByRequestURI(memoryStore, 10*time.Minute), func(c *gin.Context) {
 		c.HTML(http.StatusOK, "standings.gohtml", CraftStandings(conf, mapping))
 	})
-	router.GET("/criteria", func(c *gin.Context) {
+	router.GET("/criteria", cache.CacheByRequestURI(memoryStore, 10*time.Minute), func(c *gin.Context) {
 		c.HTML(http.StatusOK, "criteria.gohtml", CraftCriteria(conf))
 	})
 
