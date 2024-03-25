@@ -3,6 +3,7 @@ package parser
 import (
 	"cpm-standings/config"
 	"errors"
+	"fmt"
 	codeforcesapi "github.com/MichailKon/codeforces-api"
 	"github.com/MichailKon/codeforces-api/objects"
 	"github.com/MichailKon/codeforces-api/utils"
@@ -24,12 +25,14 @@ func LoadData(session *codeforcesapi.CodeforcesSession, criteria config.Criteria
 	res := SolvedTable{}
 	for _, curCriteria := range criteria {
 		var standings *objects.ContestStandings
+		asManager := false
 		for {
 			cur, err := session.ContestStandings(
 				curCriteria.ContestId,
 				utils.
 					NewContestStandingsParams().
-					WithShowUnofficial(true),
+					WithShowUnofficial(true).
+					WithAsManager(asManager),
 			)
 			if err != nil {
 				var cerr codeforcesapi.CodeforcesApiError
@@ -37,8 +40,15 @@ func LoadData(session *codeforcesapi.CodeforcesSession, criteria config.Criteria
 					if cerr.StatusCode == http.StatusServiceUnavailable {
 						continue
 					}
+					if err.Error() == "contestId: Standings are not available" {
+						slog.Info(fmt.Sprintf("Getting contest %v as manager", curCriteria.ContestId))
+						asManager = true
+						continue
+					}
 				}
-				slog.Error("Error while getting standings for contest", curCriteria.ContestId, ':', err)
+				slog.Error("Error while getting standings;",
+					"contestId", curCriteria.ContestId,
+					"error", err)
 				break
 			}
 			standings = cur

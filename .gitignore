@@ -87,3 +87,6 @@ fabric.properties
 .idea/*
 
 # End of https://www.toptal.com/developers/gitignore/api/goland+all
+
+criteria.yaml
+config.yaml

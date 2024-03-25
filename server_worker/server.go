@@ -42,7 +42,7 @@ func RunServer(conf *config.Config, mapping config.StudentsHandlesMapping) {
 
 	err := router.Run(conf.Host)
 	if err != nil {
-		slog.Error("Server down with error: %s", err)
+		slog.Error("Server down with", "error", err)
 		panic(err)
 	}
 }

@@ -2,6 +2,7 @@ package config
 
 import (
 	"cpm-standings/utils"
+	"fmt"
 	"gopkg.in/yaml.v3"
 	"log/slog"
 	"os"
@@ -30,13 +31,13 @@ type Criteria map[string]*ContestCriteria
 func ParseCriteria(filepath string) (criteria Criteria) {
 	file, err := os.Open(filepath)
 	if err != nil {
-		slog.Warn("Can't open criteria file:", err.Error())
+		slog.Warn(fmt.Sprintf("Can't open criteria file: %v", err.Error()))
 		return nil
 	}
 	defer file.Close()
 	decoder := yaml.NewDecoder(file)
 	if err := decoder.Decode(&criteria); err != nil {
-		slog.Warn("Can't read/decode criteria file:", err.Error())
+		slog.Warn(fmt.Sprintf("Can't read/decode criteria file: %v", err.Error()))
 		return nil
 	}
 	for _, contestCriteria := range criteria {

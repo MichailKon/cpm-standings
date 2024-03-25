@@ -66,9 +66,9 @@ func ExportStudentsData(
 	for _, contestId := range contestIds {
 		contestTitle := criteria.GetContestName(contestId)
 		taskGroup := criteria[contestTitle]
-		slog.Info("Filling contest", contestId)
+		slog.Info("Filling", "contestId", contestId)
 		for _, group := range taskGroup.Groups {
-			slog.Info("Filling task group", group.Name)
+			slog.Info("Filling", "taskGroup", group.Name)
 			res.ContestTitles = append(res.ContestTitles, group.Name)
 			for i, student := range res.Students {
 				solved := utils.Intersection(table[student.Handle][contestId], group.Tasks)
